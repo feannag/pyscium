@@ -3,10 +3,7 @@
    - [X] implement command to exit the editor
 
 ** TODO As a user i want to type text in the editor and be able to save it
-<<<<<<< HEAD
-=======
    - [ ] implement file IO
->>>>>>> 16ecbdae5a0eae461e0cbd306e1e12862c948d3e
    - [ ] implement command to save file
 
 ** TODO As a user i want to open a file
