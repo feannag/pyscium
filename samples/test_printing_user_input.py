@@ -15,7 +15,7 @@ def main():
     curses.cbreak()
     stdscr.keypad(True)
 
-    # take user input and print it on screen
+    # take user input and display it on screen
     ch = stdscr.getch()
     while ch != ord('~'):
         textbox = curses.textpad.Textbox(stdscr)
@@ -26,4 +26,5 @@ def main():
     terminate_application(stdscr)
 
 
-main()
+if __name__ == "__main__":
+    main()
