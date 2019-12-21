@@ -24,9 +24,11 @@ def main():
     try:
         while True:
             ch = stdscr.getch()
+            if ch == 24:
+                sys.exit()
             stdscr.addch(ch)
     except KeyboardInterrupt:
-        sys.exit()
+        pass
     finally:
         restore_terminal(stdscr)
 

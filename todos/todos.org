@@ -1,9 +1,8 @@
 * User stories
-** TODO As a user i want to launch pyscium from the command-line
-   - [ ] implement command to exit the editor
+** DONE As a user i want to launch pyscium from the command-line
+   - [X] implement command to exit the editor
 
 ** TODO As a user i want to type text in the editor and be able to save it
-   - [ ] implement 
    - [ ] implement command to save file
 
 ** TODO As a user i want to open a file
