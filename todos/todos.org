@@ -3,11 +3,17 @@
    - [X] implement command to exit the editor
 
 ** TODO As a user i want to type text in the editor and be able to save it
+<<<<<<< HEAD
+=======
+   - [ ] implement file IO
+>>>>>>> 16ecbdae5a0eae461e0cbd306e1e12862c948d3e
    - [ ] implement command to save file
 
 ** TODO As a user i want to open a file
-   - [ ] editor should be able to open the file passed as the argument
+   - [ ] implement file argument 
+   - [ ] read file contents and display in the editor window
 
-** TODO As a user i want to edit the opened file
-   - [ ] editor should allow the opened file to be edited
+** TODO As a user i want to make modifications to an opened file
+   - [ ] implement a DS to store contents of file
+   - [ ] flush contents of the DS to file when saved
 
