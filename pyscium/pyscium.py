@@ -1,18 +1,8 @@
-import logging
 import curses
+from logger import pyscium_logger
 from workspace_manager import WorkspaceManager
 
-
-def get_logger():
-    logger = logging.getLogger(__name__)
-    logger.setLevel(logging.DEBUG)
-    formatter = logging.Formatter(
-        '%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
-    fh = logging.FileHandler(filename='../logs/pyscium.log', mode='w')
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-
-    return logger
+logger = pyscium_logger.get_logger(__name__, 'pyscium.log')
 
 
 def init_ncurses():
@@ -33,8 +23,6 @@ def restore_terminal(stdscr):
     curses.echo()
     curses.endwin()
 
-
-logger = get_logger()
 
 def main():
     logger.info("main()")

@@ -1,25 +1,14 @@
+from logger import pyscium_logger
 import sys
-import logging
 import hashlib
 from pathlib import Path
-
-
-def get_logger():
-    logger = logging.getLogger(__name__)
-    logger.setLevel(logging.DEBUG)
-    formatter = logging.Formatter(
-        '%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
-    fh = logging.FileHandler(filename='../logs/workspace_manager.log', mode='w')
-    fh.setFormatter(formatter)
-    logger.addHandler(fh)
-    return logger
 
 
 class WorkspaceManager(object):
     logger = None
 
     def __init__(self, stdscr):
-        WorkspaceManager.logger = get_logger()
+        WorkspaceManager.logger = pyscium_logger.get_logger(__name__, 'workspace_manager.log')
         self.stdscr = stdscr
         self.file = None
         self.file_checksum = None
