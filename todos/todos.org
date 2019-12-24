@@ -1,16 +1,19 @@
 * User stories
 ** DONE As a user i want to launch pyscium from the command-line
-   - [X] implement command to exit the editor
+- [X] implement command to exit the editor
 
-** TODO As a user i want to type text in the editor and be able to save it
-   - [ ] implement file IO
-   - [ ] implement command to save file
+** DONE As a user i want to create a new file whose name is passed as an arg
+- [X] implement file argument 
+- [X] flush contents of the DS to file when saved
 
-** TODO As a user i want to open a file
-   - [ ] implement file argument 
-   - [ ] read file contents and display in the editor window
+** DONE As a user i want to make modifications to an existing file that is opened
+- [X] implement file argument
+- [X] implement a DS to store contents of file
+- [X] flush contents of the DS to file when saved
 
-** TODO As a user i want to make modifications to an opened file
-   - [ ] implement a DS to store contents of file
-   - [ ] flush contents of the DS to file when saved
+** TODO As a user i want switch to minibuffer so that i can enter commands into it
+- [ ] implement a minibuffer
 
+** TODO As a user i want to type the name of the file in the minibuffer
+- [ ] implement a feature such that on-save, user is prompted for the filename
+  in minibuffer

@@ -1,10 +1,24 @@
+import logging
 import curses
-import curses.textpad
-import sys
+from workspace_manager import WorkspaceManager
+
+
+def get_logger():
+    logger = logging.getLogger(__name__)
+    logger.setLevel(logging.DEBUG)
+    formatter = logging.Formatter(
+        '%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
+    fh = logging.FileHandler(filename='../logs/pyscium.log', mode='w')
+    fh.setFormatter(formatter)
+    logger.addHandler(fh)
+
+    return logger
 
 
 def init_ncurses():
+    logger.info("init_ncurses()")
     stdscr = curses.initscr()
+    curses.raw()
     curses.noecho()
     curses.cbreak()
     stdscr.keypad(True)
@@ -12,24 +26,27 @@ def init_ncurses():
 
 
 def restore_terminal(stdscr):
+    logger.info("restore_terminal()")
+    curses.noraw()
     curses.nocbreak()
     stdscr.keypad(False)
     curses.echo()
     curses.endwin()
 
 
-def main():
-    stdscr = init_ncurses()
+logger = get_logger()
 
+def main():
+    logger.info("main()")
+    stdscr = init_ncurses()
+    wm = WorkspaceManager(stdscr)
     try:
-        while True:
-            ch = stdscr.getch()
-            if ch == 24:
-                sys.exit()
-            stdscr.addch(ch)
+        logger.info("start()")
+        wm.start()
     except KeyboardInterrupt:
         pass
     finally:
+        logger.info("exiting pyscium")
         restore_terminal(stdscr)
 
 
