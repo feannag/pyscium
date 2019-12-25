@@ -5,8 +5,8 @@ from workspace_manager import WorkspaceManager
 logger = pyscium_logger.get_logger(__name__, 'pyscium.log')
 
 
-def init_ncurses():
-    logger.info("init_ncurses()")
+def init_curses():
+    logger.info("init_curses()")
     stdscr = curses.initscr()
     curses.raw()
     curses.noecho()
@@ -26,10 +26,9 @@ def restore_terminal(stdscr):
 
 def main():
     logger.info("main()")
-    stdscr = init_ncurses()
+    stdscr = init_curses()
     wm = WorkspaceManager(stdscr)
     try:
-        logger.info("start()")
         wm.start()
     except KeyboardInterrupt:
         pass

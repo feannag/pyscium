@@ -37,7 +37,7 @@ class WorkspaceManager(object):
 
     def write_contents_to_file(self, string):
         WorkspaceManager.logger.info("writing to file")
-        # logger.info("input: " + input_string)
+        WorkspaceManager.logger.info("input: " + string)
         self.file.seek(0)
         self.file.write(string)
         self.file.truncate()
@@ -45,7 +45,7 @@ class WorkspaceManager(object):
     def compute_checksum(self, input_string):
         WorkspaceManager.logger.info("computing checksum")
         checksum = hashlib.md5(input_string.encode('utf-8')).hexdigest()
-        WorkspaceManager.logger.info("DONE calculating checksum")
+        WorkspaceManager.logger.info("calculating checksum...DONE")
         return checksum
 
     def is_file_modified(self, input_string):  # TODO: change name of method(is_buffer_modified/is_input_modified)
@@ -58,13 +58,15 @@ class WorkspaceManager(object):
             return True
 
     def start(self):
-        #  TODO: check if argument is passed;
-        #  TODO: if no, allow user to save contents of buffer
+        WorkspaceManager.logger.info("start()")
+
+        #  check if argument(filename) is passed;
+        #  if no, allow user to save contents of buffer
         if not len(sys.argv) > 1:
             # TODO: complete this
             pass
 
-        # TODO: if yes, check if that file exists; if it exists, display contents; if no, create a new file
+        # if yes, check if that file exists; if it exists, display contents; if no, create a new file
         else:
             if Path(sys.argv[1]).is_file():
                 self.open_file(sys.argv[1])
