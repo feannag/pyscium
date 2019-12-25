@@ -1,7 +1,7 @@
 from logger import pyscium_logger
 import sys
-import hashlib
 from pathlib import Path
+from utils import checksum_util
 
 
 class WorkspaceManager(object):
@@ -42,15 +42,9 @@ class WorkspaceManager(object):
         self.file.write(string)
         self.file.truncate()
 
-    def compute_checksum(self, input_string):
-        WorkspaceManager.logger.info("computing checksum")
-        checksum = hashlib.md5(input_string.encode('utf-8')).hexdigest()
-        WorkspaceManager.logger.info("calculating checksum...DONE")
-        return checksum
-
     def is_file_modified(self, input_string):  # TODO: change name of method(is_buffer_modified/is_input_modified)
         WorkspaceManager.logger.info("checking if checksum are same")
-        if self.compute_checksum(input_string) == self.file_checksum:
+        if checksum_util.compute_string_checksum(input_string) == self.file_checksum:
             WorkspaceManager.logger.info("checksums are same")
             return False
         else:
@@ -71,10 +65,10 @@ class WorkspaceManager(object):
             if Path(sys.argv[1]).is_file():
                 self.open_file(sys.argv[1])
                 self.display_file_contents()
-                self.file_checksum = hashlib.md5(open(self.file.name, 'rb').read()).hexdigest()
+                self.file_checksum = checksum_util.compute_file_checksum(self.file)
             else:
                 self.create_file(sys.argv[1])
-                self.file_checksum = hashlib.md5(open(self.file.name, 'rb').read()).hexdigest()
+                self.file_checksum = checksum_util.compute_file_checksum(self.file)
 
         while True:
             ch = self.stdscr.getch()
@@ -90,7 +84,7 @@ class WorkspaceManager(object):
                     if self.is_file_modified(input_string):
                         self.write_contents_to_file(input_string)
                         WorkspaceManager.logger.info("storing new checksum")
-                        self.file_checksum = self.compute_checksum(input_string)
+                        self.file_checksum = checksum_util.compute_string_checksum(input_string)
             else:
                 self.stdscr.addch(ch)
                 self.user_input.append(ch)
