@@ -1,3 +1,4 @@
+import sys
 import curses
 from logger import pyscium_logger
 from workspace_manager import WorkspaceManager
@@ -27,7 +28,10 @@ def restore_terminal(stdscr):
 def main():
     logger.info("main()")
     stdscr = init_curses()
-    wm = WorkspaceManager(stdscr)
+    filename = None
+    if len(sys.argv) > 1:
+        filename = sys.argv[1]
+    wm = WorkspaceManager(stdscr, filename)
     try:
         wm.start()
     except KeyboardInterrupt:

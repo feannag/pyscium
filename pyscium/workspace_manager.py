@@ -8,8 +8,9 @@ from utils import file_util
 class WorkspaceManager(object):
     logger = None
 
-    def __init__(self, stdscr):
+    def __init__(self, stdscr, filename):
         WorkspaceManager.logger = pyscium_logger.get_logger(__name__, 'workspace_manager.log')
+        self.filename = filename
         self.stdscr = stdscr
         self.file = None
         self.file_checksum = None
@@ -41,18 +42,18 @@ class WorkspaceManager(object):
 
         #  check if argument(filename) is passed;
         #  if no, allow user to save contents of buffer
-        if not len(sys.argv) > 1:
+        if self.filename is None:
             # TODO: complete this
             pass
 
         # if yes, check if that file exists; if it exists, display contents; if no, create a new file
         else:
-            if Path(sys.argv[1]).is_file():
-                self.file = file_util.open_file(sys.argv[1])
+            if Path(self.filename).is_file():
+                self.file = file_util.open_file(self.filename)
                 self.display_file_contents()
                 self.file_checksum = checksum_util.compute_file_checksum(self.file)
             else:
-                self.file = file_util.create_file(sys.argv[1])
+                self.file = file_util.create_file(self.filename)
                 self.file_checksum = checksum_util.compute_file_checksum(self.file)
 
         while True:
