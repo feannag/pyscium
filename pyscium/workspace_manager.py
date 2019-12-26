@@ -2,6 +2,7 @@ from logger import pyscium_logger
 import sys
 from pathlib import Path
 from utils import checksum_util
+from utils import file_util
 
 
 class WorkspaceManager(object):
@@ -14,15 +15,6 @@ class WorkspaceManager(object):
         self.file_checksum = None
         self.user_input = []
 
-    def open_file(self, filename):
-        WorkspaceManager.logger.info('open_file()')
-        self.file = open(filename, 'r+')
-        # file = open(filename, 'r+', 1)
-
-    def create_file(self, filename):
-        WorkspaceManager.logger.info('create_file')
-        self.file = open(filename, 'x')
-
     def display_file_contents(self):
         WorkspaceManager.logger.info('display_file()')
         data = self.file.read()
@@ -34,13 +26,6 @@ class WorkspaceManager(object):
         WorkspaceManager.logger.info(self.user_input)
 
         self.stdscr.addstr(data)
-
-    def write_contents_to_file(self, string):
-        WorkspaceManager.logger.info("writing to file")
-        WorkspaceManager.logger.info("input: " + string)
-        self.file.seek(0)
-        self.file.write(string)
-        self.file.truncate()
 
     def is_file_modified(self, input_string):  # TODO: change name of method(is_buffer_modified/is_input_modified)
         WorkspaceManager.logger.info("checking if checksum are same")
@@ -63,11 +48,11 @@ class WorkspaceManager(object):
         # if yes, check if that file exists; if it exists, display contents; if no, create a new file
         else:
             if Path(sys.argv[1]).is_file():
-                self.open_file(sys.argv[1])
+                self.file = file_util.open_file(sys.argv[1])
                 self.display_file_contents()
                 self.file_checksum = checksum_util.compute_file_checksum(self.file)
             else:
-                self.create_file(sys.argv[1])
+                self.file = file_util.create_file(sys.argv[1])
                 self.file_checksum = checksum_util.compute_file_checksum(self.file)
 
         while True:
@@ -82,7 +67,7 @@ class WorkspaceManager(object):
                 input_string = ''.join(chr(i) for i in self.user_input)
                 if self.file is not None:
                     if self.is_file_modified(input_string):
-                        self.write_contents_to_file(input_string)
+                        file_util.write_contents_to_file(input_string, self.file)
                         WorkspaceManager.logger.info("storing new checksum")
                         self.file_checksum = checksum_util.compute_string_checksum(input_string)
             else:
