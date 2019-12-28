@@ -8,37 +8,37 @@ logger = pyscium_logger.get_logger(__name__, 'pyscium.log')
 
 def init_curses():
     logger.info("init_curses()")
-    stdscr = curses.initscr()
+    curses.initscr()
     curses.raw()
     curses.noecho()
     curses.cbreak()
-    stdscr.keypad(True)
-    return stdscr
 
 
-def restore_terminal(stdscr):
+def restore_terminal():
     logger.info("restore_terminal()")
     curses.noraw()
     curses.nocbreak()
-    stdscr.keypad(False)
     curses.echo()
     curses.endwin()
 
 
 def main():
     logger.info("main()")
-    stdscr = init_curses()
+
+    init_curses()
+
     filename = None
     if len(sys.argv) > 1:
         filename = sys.argv[1]
-    wm = WorkspaceManager(stdscr, filename)
+    wm = WorkspaceManager(filename)
+
     try:
         wm.start()
     except KeyboardInterrupt:
         pass
     finally:
         logger.info("exiting pyscium")
-        restore_terminal(stdscr)
+        restore_terminal()
 
 
 if __name__ == "__main__":

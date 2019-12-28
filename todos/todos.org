@@ -11,9 +11,9 @@
 - [X] implement a DS to store contents of file
 - [X] flush contents of the DS to file when saved
 
-** TODO As a user i want switch to minibuffer so that i can enter commands into it
-- [ ] implement a minibuffer
+** DONE As a user i want switch to minibuffer so that i can enter commands into it
+- [X] implement a minibuffer
 
-** TODO As a user i want to type the name of the file in the minibuffer
-- [ ] implement a feature such that on-save, user is prompted for the filename
+** DONE As a user i want to type the name of the file in the minibuffer
+- [X] implement a feature such that on-save, user is prompted for the filename
   in minibuffer
