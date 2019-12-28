@@ -17,3 +17,9 @@
 ** DONE As a user i want to type the name of the file in the minibuffer
 - [X] implement a feature such that on-save, user is prompted for the filename
   in minibuffer
+
+** TODO As a developer i want to implement command design pattern
+- [ ] implement command design pattern for quitting the editor
+- [ ] implement command design pattern for open file
+- [ ] implement command design pattern for save file
+- [ ] implement command design pattern for quitting minibuffer operations(ex save file)
