@@ -1,8 +1,14 @@
 from pathlib import Path
+from logger import pyscium_logger
+
+logger = pyscium_logger.get_logger(__name__, 'file_util.log')
 
 
 def create_file(filename):
-    open(filename, 'x')
+    try:
+        open(filename, 'x')
+    except FileExistsError as e:
+        logger.info(e)
 
 
 def open_file(filename):

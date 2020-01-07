@@ -63,6 +63,7 @@ class Window:
                 file_path = Path(filename)
                 if file_path.parent.exists():
                     file_util.create_file(file_path)
+                    self.__buffer.set_file_name(file_path)
                     self.__buffer.save_file()
                     self.__mini_window.display_message_in_mini_buffer('Changes saved')
 
