@@ -1,5 +1,6 @@
 import sys
 import curses
+from curses import wrapper
 from logger import pyscium_logger
 from workspace_manager import WorkspaceManager
 
