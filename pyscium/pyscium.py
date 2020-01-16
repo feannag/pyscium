@@ -26,16 +26,18 @@ def restore_terminal():
 def main():
     logger.info("main()")
 
-    init_curses()
-
-    filename = None
-    if len(sys.argv) > 1:
-        filename = sys.argv[1]
-    wm = WorkspaceManager(filename)
-
     try:
+        init_curses()
+
+        filename = None
+        if len(sys.argv) > 1:
+            filename = sys.argv[1]
+        wm = WorkspaceManager(filename)
+
         wm.start()
     except KeyboardInterrupt:
+        pass
+    except TypeError:
         pass
     finally:
         logger.info("exiting pyscium")

@@ -29,8 +29,10 @@ def write_data_to_file(filename, data):
     file = open_file(filename)
     if file is not None:
         file.seek(0)
+
         for line in data:
-            file.write(line)
+            string = ''.join(line)
+            file.write(string)
         file.truncate()
 
 
