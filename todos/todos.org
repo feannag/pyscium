@@ -23,3 +23,30 @@
 - [X] implement command design pattern for open file
 - [X] implement command design pattern for save file
 - [X] implement command design pattern for quitting minibuffer operations(ex save file)
+
+** DONE As a developer i want to implement a new data structure to store buffer contents
+- [X] implement a new data structure to store buffer contents
+
+** TODO Implement the following commands
+- [ ] delete character under cursor command(C-d)
+- [ ] arrow keys
+- [ ] delete(DEL key)
+- [ ] HOME
+- [ ] END
+- [ ] PgUp
+- [ ] PgDown
+
+** TODO Clean/Refactor code
+- [ ] imports
+- [ ] spacing between if elif else blocks
+- [ ] rename methods
+- [ ] rename __main_window to __internal_window
+ 
+** TODO Clear minibuffer on following commands
+- [ ] C-p
+- [ ] C-n
+- [ ] C-a
+- [ ] C-b
+
+** TODO Misc
+- [ ] beep on backspace at start of buffer ie (y, x) = (0, 0)
