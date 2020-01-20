@@ -35,10 +35,16 @@ def main():
         wm = WorkspaceManager(filename)
 
         wm.start()
+
     except KeyboardInterrupt:
         pass
+
     except TypeError:
         pass
+
+    except curses.error as e:
+        logger.info(e)
+
     finally:
         logger.info("exiting pyscium")
         restore_terminal()
