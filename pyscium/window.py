@@ -266,6 +266,9 @@ class Window:
 
             self.__buffer.delete_character(current_line_number, x)
 
+        elif current_line_number == 0 and x == 0:
+            curses.beep()
+
         else:
             self.__buffer.remove_line_and_append_at_position(current_line_number, current_line_number - 1)
             self.set_current_line_character_number(length_of_line_to_append_to)

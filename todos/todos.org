@@ -71,4 +71,4 @@
 - [ ] rename _Buffer.get_x_of_last_character_of_line() to _Buffer.get_length_of_line()
 - [ ] change logger.info(e) statements to logger.exception(e) where appropriate
 
-** TODO Beep on backspace at start of buffer ie (y, x) = (0, 0)
+** DONE Beep on backspace at start of buffer ie current_line_number equals 0 AND x equals 0
