@@ -62,15 +62,15 @@ class Buffer:
 
         self.__buffer_end = (y, x)
 
-    def add_ch(self, ch, current_line_number, x):
+    def add_ch(self, ch, current_line_number, current_line_character_number):
         try:
             if ch != 10:
-                self.__contents[current_line_number].insert(x, chr(ch))
-            elif self.__contents[current_line_number][x] != '\n':
-                self.__contents[current_line_number].insert(x, chr(ch))
+                self.__contents[current_line_number].insert(current_line_character_number, chr(ch))
+            elif self.__contents[current_line_number][current_line_character_number] != '\n':
+                self.__contents[current_line_number].insert(current_line_character_number, chr(ch))
         except IndexError:
             self.__contents.append([])
-            self.__contents[current_line_number].insert(x, chr(ch))
+            self.__contents[current_line_number].insert(current_line_character_number, chr(ch))
 
         self.set_is_modified(True)
 
@@ -87,7 +87,7 @@ class Buffer:
 
         self.set_is_modified(True)
 
-    def get_x_of_last_character_of_line(self, line_number):
+    def get_length_of_line(self, line_number):
         try:
             number_of_lines_in_buffer = len(self.__contents)
             if line_number <= number_of_lines_in_buffer:
@@ -114,9 +114,12 @@ class Buffer:
         except IndexError:
             pass
 
-    def move_current_line_to_next_line(self, current_line_number, x):
+    def get_length_of_line_after_append(self, current_line_number):
+        return self.get_length_of_line(current_line_number) + self.get_length_of_line(current_line_number - 1)
+
+    def move_current_line_to_next_line(self, current_line_number, current_line_character_number):
         line_under_cursor = self.__contents[current_line_number]
-        contents_after_cursor = line_under_cursor[x:]
+        contents_after_cursor = line_under_cursor[current_line_character_number:]
 
         # check if contents_after_cursor is empty; if yes, append a newline
         if not contents_after_cursor:
@@ -126,6 +129,6 @@ class Buffer:
         self.__contents.insert(current_line_number + 1, contents_after_cursor)
 
         # remove those contents from buffer
-        self.__contents[current_line_number] = line_under_cursor[:x]
+        self.__contents[current_line_number] = line_under_cursor[:current_line_character_number]
 
         self.set_is_modified(True)

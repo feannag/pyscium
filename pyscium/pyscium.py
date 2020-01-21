@@ -39,8 +39,8 @@ def main():
     except KeyboardInterrupt:
         pass
 
-    except TypeError:
-        pass
+    except TypeError as e:
+        logger.exception(e)
 
     except curses.error as e:
         logger.info(e)

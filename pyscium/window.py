@@ -27,9 +27,12 @@ class Window:
 
         self.__left = 0
 
-        self.__right =
+        self.__right = curses.COLS
+
         # since current_line_number is used to index through the contents, it is initialized to 0
         self.__current_line_number = 0
+
+        self.__current_line_character_number = 0
 
         self.open_file_or_create_it()
 
@@ -52,6 +55,24 @@ class Window:
     def decrement_bottom(self):
         self.__bottom -= 1
 
+    def set_left(self, left):
+        self.__left = left
+
+    def set_right(self, right):
+        self.__right = right
+
+    def increment_left(self):
+        self.__left += 1
+
+    def decrement_left(self):
+        self.__left -= 1
+
+    def increment_right(self):
+        self.__right += 1
+
+    def decrement_right(self):
+        self.__right -= 1
+
     def get_current_line_number(self):
         return self.__current_line_number
 
@@ -61,50 +82,109 @@ class Window:
     def decrement_current_line_number(self):
         self.__current_line_number -= 1
 
+    def get_current_line_character_number(self):
+        return self.__current_line_character_number
+
+    def set_current_line_character_number(self, character_number):
+        self.__current_line_character_number = character_number
+
+    def increment_current_line_character_number(self):
+        self.__current_line_character_number += 1
+
+    def decrement_current_line_character_number(self):
+        self.__current_line_character_number -= 1
+
     def get_window(self):
         return self.__main_window
 
     def move_to_beginning_of_line(self):
         y, x = self.__main_window.getyx()
+        maxy, maxx = self.__main_window.getmaxyx()
+
+        self.set_left(0)
+        self.set_right(maxx)
+        self.set_current_line_character_number(0)
+
+        self.display_buffer_contents()
         self.__main_window.move(y, 0)
 
     def move_to_end_of_line(self):
         y, x = self.__main_window.getyx()
-        self.__main_window.move(y, self.__buffer.get_x_of_last_character_of_line(self.__current_line_number))
+        maxy, maxx = self.__main_window.getmaxyx()
+        current_line_number = self.get_current_line_number()
+
+        current_line_length = self.__buffer.get_length_of_line(current_line_number) + 1  # +1 for \n
+
+        if current_line_length > maxx:
+            self.set_left(current_line_length - maxx)
+            self.set_right(current_line_length)
+            self.display_buffer_contents()
+            self.__main_window.move(y, maxx - 1)
+        else:
+            self.display_buffer_contents()
+            self.__main_window.move(y, current_line_length - 1)
+
+        self.set_current_line_character_number(current_line_length - 1)  # -1 since it acts as an index
 
     def move_forward_one_char(self):
         y, x = self.__main_window.getyx()
         maxy, maxx = self.__main_window.getmaxyx()
         buffer_end_y, buffer_end_x = self.__buffer.get_buffer_end()
+        current_line_number = self.get_current_line_number()
 
-        x_of_last_character_of_line_on_y = self.__buffer.get_x_of_last_character_of_line(self.__current_line_number)
+        current_line_character_number = self.get_current_line_character_number()
+        x_of_last_character_of_line_on_y = self.__buffer.get_length_of_line(current_line_number)
 
-        if x < maxx -  1 and x < x_of_last_character_of_line_on_y:
+        if x < maxx - 1 and current_line_character_number < x_of_last_character_of_line_on_y:
             self.__main_window.move(y, x + 1)
+            self.increment_current_line_character_number()
 
-        elif self.__current_line_number == buffer_end_y:
+        elif x == maxx - 1 and current_line_character_number < x_of_last_character_of_line_on_y:
+            self.increment_left()
+            self.increment_right()
+            self.increment_current_line_character_number()
+            self.display_buffer_contents()
+
+            self.__main_window.move(y, maxx - 1)
+
+        elif current_line_number == buffer_end_y:
             curses.beep()
 
         else:
             self.move_to_next_line()
+            self.set_current_line_character_number(0)
 
     def move_backward_one_char(self):
         y, x = self.__main_window.getyx()
         buffer_start_y, buffer_start_x = self.__buffer.get_buffer_start()
+        current_line_number = self.get_current_line_number()
+        current_line_character_number = self.get_current_line_character_number()
 
         if x > 0:
             self.__main_window.move(y, x - 1)
+            self.decrement_current_line_character_number()
 
-        elif y == buffer_start_y:
+        elif x == 0 and current_line_character_number > 0:
+            self.decrement_left()
+            self.decrement_right()
+            self.decrement_current_line_character_number()
+            self.display_buffer_contents()
+
+            self.__main_window.move(y, 0)
+
+        elif current_line_number == buffer_start_y:
             curses.beep()
 
         else:
             self.move_to_previous_line()
             self.move_to_end_of_line()
+            current_line_number = self.get_current_line_number()
+            current_line_character_number = self.__buffer.get_length_of_line(current_line_number)
+            self.set_current_line_character_number(current_line_character_number)
 
     def move_to_next_line(self):
         y, x = self.__main_window.getyx()
-
+        maxy, maxx = self.__main_window.getmaxyx()
         current_line_number = self.get_current_line_number()
         buffer_end_y, buffer_end_x = self.__buffer.get_buffer_end()
 
@@ -120,6 +200,10 @@ class Window:
                 self.display_buffer_contents()
                 self.__main_window.move(y, 0)
             else:
+                self.set_left(0)
+                self.set_right(maxx)
+                self.set_current_line_character_number(0)
+                self.display_buffer_contents()
                 self.__main_window.move(y + 1, 0)
 
             if current_line_number < buffer_end_y:
@@ -154,29 +238,37 @@ class Window:
 
     def backspace(self):
         y, x = self.__main_window.getyx()
+        maxy, maxx = self.__main_window.getmaxyx()
+        current_line_number = self.get_current_line_number()
+        length_of_line_to_append_to = self.__buffer.get_length_of_line(current_line_number - 1)
         prev_line_y = y - 1
-        prev_line_x = self.__buffer.get_x_of_last_character_of_line(self.__current_line_number - 1)
+        prev_line_x = self.__buffer.get_length_of_line(current_line_number - 1)
 
-        # if cursor is on any line but the first line of the window AND
-        # it is on the first position of that line
         if y > 0 and x == 0:
-            self.__buffer.remove_line_and_append_at_position(self.__current_line_number, self.__current_line_number - 1)
-            self.decrement_current_line_number()
-            self.display_buffer_contents()
+            if self.__buffer.get_length_of_line_after_append(current_line_number) > maxx:
+                self.set_left(self.__buffer.get_length_of_line(current_line_number - 1) - int(maxx / 2))
+                self.set_right(self.__buffer.get_length_of_line(current_line_number - 1) + int(maxx / 2))
+                self.__buffer.remove_line_and_append_at_position(current_line_number, current_line_number - 1)
+                self.set_current_line_character_number(length_of_line_to_append_to)
+                self.decrement_current_line_number()
+                self.display_buffer_contents()
+                self.__main_window.move(prev_line_y, int(maxx/2))
+            else:
+                self.__buffer.remove_line_and_append_at_position(current_line_number, current_line_number - 1)
+                self.set_current_line_character_number(length_of_line_to_append_to)
+                self.decrement_current_line_number()
+                self.display_buffer_contents()
+                self.__main_window.move(prev_line_y, length_of_line_to_append_to)
 
-            self.__main_window.move(prev_line_y, prev_line_x)
-
-        # if cursor is on any line but the first line of the window OR
-        # it is NOT on first position of that line
         elif y > 0 or x > 0:
             self.move_backward_one_char()
             self.__main_window.delch()
 
-            self.__buffer.delete_character(self.__current_line_number, x)
+            self.__buffer.delete_character(current_line_number, x)
 
-        # cursor is on the first line of the window
         else:
-            self.__buffer.remove_line_and_append_at_position(self.__current_line_number, self.__current_line_number - 1)
+            self.__buffer.remove_line_and_append_at_position(current_line_number, current_line_number - 1)
+            self.set_current_line_character_number(length_of_line_to_append_to)
             self.decrement_current_line_number()
             self.decrement_top()
             self.decrement_bottom()
@@ -187,15 +279,19 @@ class Window:
     def newline(self):
         newline = 10
         main_window_height = curses.LINES - 1
-
+        maxy, maxx = self.__main_window.getmaxyx()
         y, x = self.__main_window.getyx()
         next_line_y = y + 1
         next_line_x = 0
-
+        current_line_number = self.get_current_line_number()
+        current_line_character_number = self.get_current_line_character_number()
         self.__main_window.insch(newline)
-        self.__buffer.add_ch(newline, self.__current_line_number, x)
+        self.__buffer.add_ch(newline, current_line_number, current_line_character_number)
 
-        self.__buffer.move_current_line_to_next_line(self.__current_line_number, x + 1)
+        self.__buffer.move_current_line_to_next_line(current_line_number, current_line_character_number + 1)
+        self.set_left(0)
+        self.set_right(maxx)
+        self.set_current_line_character_number(0)
         self.increment_current_line_number()
 
         if next_line_y == main_window_height:
@@ -211,9 +307,10 @@ class Window:
 
     def add_ch(self, ch):
         y, x = self.__main_window.getyx()
-
+        current_line_number = self.get_current_line_number()
+        current_line_character_number = self.get_current_line_character_number()
         self.__main_window.insch(ch)
-        self.__buffer.add_ch(ch, self.__current_line_number, x)
+        self.__buffer.add_ch(ch, current_line_number, current_line_character_number)
 
         self.move_forward_one_char()
 
@@ -222,8 +319,9 @@ class Window:
 
         data = self.__buffer.get_contents()
         try:
-            for index, line in enumerate(data[self.__top:self.__bottom]):
-                string = ''.join(line)
+            for index, line in enumerate(data[self.__top : self.__bottom]):
+                string = ''.join(line[self.__left : self.__right])
+
                 self.__main_window.addstr(string)
 
         except TypeError as e:

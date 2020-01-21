@@ -27,26 +27,48 @@
 ** DONE As a developer i want to implement a new data structure to store buffer contents
 - [X] implement a new data structure to store buffer contents
 
-** TODO Implement the following commands
-- [ ] delete character under cursor command(C-d)
+** DONE As a user i want to scroll through text
+- [X] implement vertical scrolling
+- [X] implement horizontal scrolling
+
+
+** TODO As a developer i want to write unit tests
+- [ ] write unit tests
+
+** TODO As a user i want to delete the character under the cursor using C-d command
+- [ ] implement the command to delete character under cursor using C-d
+
+** +TODO Implement the following commands+
 - [ ] arrow keys
-- [ ] delete(DEL key)
 - [ ] HOME
 - [ ] END
 - [ ] PgUp
 - [ ] PgDown
 
-** TODO Clean/Refactor code
-- [ ] imports
-- [ ] spacing between if elif else blocks
-- [ ] rename methods
-- [ ] rename __main_window to __internal_window
- 
+* Issues
+** TODO Resizing is causing the keyboard input to be added to the window
+
 ** TODO Clear minibuffer on following commands
 - [ ] C-p
 - [ ] C-n
 - [ ] C-a
 - [ ] C-b
 
-** TODO Misc
-- [ ] beep on backspace at start of buffer ie (y, x) = (0, 0)
+** TODO Move forward/backward one word at a time
+- [ ] impelement M-f/M-b commands to  move forward/backward one word at a time
+
+** TODO C-e fails for line without \n character
+
+* Misc
+** TODO Clean/Refactor code
+- [ ] imports
+- [ ] spacing between if elif else blocks
+- [ ] rename methods
+- [ ] rename __main_window to __internal_window
+- [ ] create a variable to hold the value of (curses.LINES - 1)
+- [ ] rename display_buffer_contents() to update_buffer_contents()
+- [ ] change "no changes need to be saved" to "No changes need to be saved"
+- [ ] rename _Buffer.get_x_of_last_character_of_line() to _Buffer.get_length_of_line()
+- [ ] change logger.info(e) statements to logger.exception(e) where appropriate
+
+** TODO Beep on backspace at start of buffer ie (y, x) = (0, 0)
