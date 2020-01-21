@@ -31,12 +31,14 @@
 - [X] implement vertical scrolling
 - [X] implement horizontal scrolling
 
-
 ** TODO As a developer i want to write unit tests
 - [ ] write unit tests
 
 ** TODO As a user i want to delete the character under the cursor using C-d command
 - [ ] implement the command to delete character under cursor using C-d
+
+** TODO As a user i want to move forwards/backwards one word at a time
+- [ ] impelement M-f/M-b commands to  move forward/backward one word at a time
 
 ** +TODO Implement the following commands+
 - [ ] arrow keys
@@ -54,14 +56,11 @@
 - [ ] C-a
 - [ ] C-b
 
-** TODO Move forward/backward one word at a time
-- [ ] impelement M-f/M-b commands to  move forward/backward one word at a time
-
 ** TODO C-e fails for line without \n character
 
 * Misc
 ** TODO Clean/Refactor code
-- [ ] imports
+- [X] imports
 - [ ] spacing between if elif else blocks
 - [ ] rename methods
 - [ ] rename __main_window to __internal_window
