@@ -120,6 +120,7 @@ class Window:
             self.set_right(current_line_length)
             self.display_buffer_contents()
             self.__main_window.move(y, maxx - 1)
+
         else:
             self.display_buffer_contents()
             self.__main_window.move(y, current_line_length - 1)
@@ -199,6 +200,7 @@ class Window:
 
                 self.display_buffer_contents()
                 self.__main_window.move(y, 0)
+
             else:
                 self.set_left(0)
                 self.set_right(maxx)
@@ -227,6 +229,7 @@ class Window:
 
                 self.display_buffer_contents()
                 self.__main_window.move(0, 0)
+
             else:
                 self.__main_window.move(y - 1, 0)
 
@@ -245,6 +248,7 @@ class Window:
         prev_line_x = self.__buffer.get_length_of_line(current_line_number - 1)
 
         if y > 0 and x == 0:
+
             if self.__buffer.get_length_of_line_after_append(current_line_number) > maxx:
                 self.set_left(self.__buffer.get_length_of_line(current_line_number - 1) - int(maxx / 2))
                 self.set_right(self.__buffer.get_length_of_line(current_line_number - 1) + int(maxx / 2))
@@ -253,6 +257,7 @@ class Window:
                 self.decrement_current_line_number()
                 self.display_buffer_contents()
                 self.__main_window.move(prev_line_y, int(maxx/2))
+
             else:
                 self.__buffer.remove_line_and_append_at_position(current_line_number, current_line_number - 1)
                 self.set_current_line_character_number(length_of_line_to_append_to)
@@ -305,6 +310,7 @@ class Window:
 
         if next_line_y != main_window_height:
             self.__main_window.move(next_line_y, next_line_x)
+
         else:
             self.__main_window.move(y, 0)
 
@@ -348,6 +354,7 @@ class Window:
         self.set_current_cursor_coordinates()
 
         if self.__buffer.get_file_name() is not None:
+
             if self.__buffer.get_is_modified():
                 self.__buffer.save_file()
                 self.__mini_window.display_message_in_mini_buffer('Changes saved')
@@ -359,6 +366,7 @@ class Window:
         else:
             filename = self.__mini_window.get_file_name()
             if filename is not None:
+
                 file_path = Path(filename)
                 if file_path.parent.exists():
                     file_util.create_file(file_path)

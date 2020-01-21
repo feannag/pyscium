@@ -61,7 +61,7 @@
 * Misc
 ** TODO Clean/Refactor code
 - [X] imports
-- [ ] spacing between if elif else blocks
+- [X] spacing between if elif else blocks
 - [ ] rename methods
 - [ ] rename __main_window to __internal_window
 - [ ] create a variable to hold the value of (curses.LINES - 1)

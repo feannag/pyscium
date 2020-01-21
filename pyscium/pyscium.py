@@ -28,8 +28,8 @@ def main():
 
     try:
         init_curses()
-
         filename = None
+
         if len(sys.argv) > 1:
             filename = sys.argv[1]
         wm = WorkspaceManager(filename)

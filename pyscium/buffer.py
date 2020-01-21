@@ -66,8 +66,10 @@ class Buffer:
         try:
             if ch != 10:
                 self.__contents[current_line_number].insert(current_line_character_number, chr(ch))
+
             elif self.__contents[current_line_number][current_line_character_number] != '\n':
                 self.__contents[current_line_number].insert(current_line_character_number, chr(ch))
+
         except IndexError:
             self.__contents.append([])
             self.__contents[current_line_number].insert(current_line_character_number, chr(ch))
@@ -82,6 +84,7 @@ class Buffer:
     def delete_character(self, y, x):
         try:
             del self.__contents[y][x]
+
         except IndexError:
             del self.__contents[y]
 
@@ -108,9 +111,11 @@ class Buffer:
         try:
             if '\n' in self.__contents[position]:
                 del self.__contents[position][-1]
+
             self.__contents[position].extend(self.__contents[current_line_number])
             del self.__contents[current_line_number]
             self.set_is_modified(True)
+
         except IndexError:
             pass
 
