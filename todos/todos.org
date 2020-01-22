@@ -67,9 +67,7 @@
 - [X] rename __main_window to __internal_window
 - [ ] refactor get_logger()
 - [ ] create a variable to hold the value of (curses.LINES - 1)
-- [ ] rename display_buffer_contents() to update_buffer_contents()
 - [ ] change "no changes need to be saved" to "No changes need to be saved"
-- [ ] rename _Buffer.get_x_of_last_character_of_line() to _Buffer.get_length_of_line()
 - [ ] change logger.info(e) statements to logger.exception(e) where appropriate
 
 ** DONE Beep on backspace at start of buffer ie current_line_number equals 0 AND x equals 0
