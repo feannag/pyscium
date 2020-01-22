@@ -65,7 +65,7 @@
 - [X] rename classes & methods
 - [X] remove unnecessary classes
 - [X] rename __main_window to __internal_window
-- [ ] refactor get_logger()
+- [X] refactor get_logger()
 - [ ] create a variable to hold the value of (curses.LINES - 1)
 - [ ] change "no changes need to be saved" to "No changes need to be saved"
 - [ ] change logger.info(e) statements to logger.exception(e) where appropriate
