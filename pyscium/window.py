@@ -360,7 +360,7 @@ class Window:
                 self.__mini_window.display_message_in_mini_buffer('Changes saved')
                 self.restore_cursor()
             else:
-                self.__mini_window.display_message_in_mini_buffer('no changes need to be saved')
+                self.__mini_window.display_message_in_mini_buffer('No changes need to be saved')
                 self.restore_cursor()
 
         else:

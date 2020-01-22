@@ -66,8 +66,8 @@
 - [X] remove unnecessary classes
 - [X] rename __main_window to __internal_window
 - [X] refactor get_logger()
-- [ ] create a variable to hold the value of (curses.LINES - 1)
-- [ ] change "no changes need to be saved" to "No changes need to be saved"
+- [X] change "no changes need to be saved" to "No changes need to be saved"
 - [ ] change logger.info(e) statements to logger.exception(e) where appropriate
+- [ ] create a variable to hold the value of (curses.LINES - 1)
 
 ** DONE Beep on backspace at start of buffer ie current_line_number equals 0 AND x equals 0
