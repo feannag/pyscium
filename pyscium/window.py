@@ -331,7 +331,10 @@ class Window:
             for index, line in enumerate(data[self.__top : self.__bottom]):
                 string = ''.join(line[self.__left : self.__right])
 
-                self.__internal_window.addstr(string)
+                if string:
+                    self.__internal_window.addstr(string)
+                else:
+                    self.__internal_window.addstr('\n')
 
         except TypeError as e:
             Window.logger.exception(e)
