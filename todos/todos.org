@@ -64,8 +64,8 @@
 - [X] spacing between if elif else blocks
 - [X] rename classes & methods
 - [X] remove unnecessary classes
+- [X] rename __main_window to __internal_window
 - [ ] refactor get_logger()
-- [ ] rename __main_window to __internal_window
 - [ ] create a variable to hold the value of (curses.LINES - 1)
 - [ ] rename display_buffer_contents() to update_buffer_contents()
 - [ ] change "no changes need to be saved" to "No changes need to be saved"

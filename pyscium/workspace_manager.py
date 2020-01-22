@@ -25,7 +25,7 @@ class WorkspaceManager(object):
         WorkspaceManager.logger.info("start()")
         invoker = CommandInvoker()
 
-        window = self.__window.get_window()
+        window = self.__window.get_internal_window()
         while True:
             ch = window.getch()
 
