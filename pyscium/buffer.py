@@ -62,7 +62,7 @@ class Buffer:
 
         self.__buffer_end = (y, x)
 
-    def add_ch(self, ch, current_line_number, current_line_character_number):
+    def ins_ch(self, ch, current_line_number, current_line_character_number):
         try:
             if ch != 10:
                 self.__contents[current_line_number].insert(current_line_character_number, chr(ch))

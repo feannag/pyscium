@@ -31,81 +31,13 @@ class CloseFileCommand(Command):
 
 
 # window commands
-class GetCharacterCommand(Command):
-    def __init__(self, obj):
-        super().__init__(obj)
-        self.ch = None
-
-    def execute(self):
-        self.ch = self.obj.getch()
-
-
-class AddChCommand(Command):
+class InsertChCommand(Command):
     def __init__(self, obj, ch):
         super().__init__(obj)
         self.ch = ch
 
     def execute(self):
-        self.obj.add_ch(self.ch)
-
-
-class SetCursorCoordinatesCommand(Command):
-    def execute(self):
-        self.obj.set_current_cursor_coordinates()
-
-
-class DisplayFileContentsCommand(Command):
-    def execute(self):
-        self.obj.display_buffer_contents()
-
-
-class EitherOpenFileOrCreateIt(Command):
-    def execute(self):
-        self.obj.open_file_or_create_it()
-
-
-# buffer commands
-class AddChToBuffer(Command):
-    def __init__(self, obj, ch):
-        super().__init__(obj)
-        self.ch = ch
-
-    def execute(self):
-        self.obj.add_ch(self.ch)
-
-
-class IsBufferModifiedCommand(Command):
-    def execute(self):
-        return self.obj.get_is_modified()
-
-
-# mini-buffer commands
-class GetContentsCommand(Command):
-    def execute(self):
-        self.obj.get_contents()
-
-
-class GetFileNameCommand(Command):
-    def execute(self):
-        self.obj.get_file_name()
-
-
-class DisplayMessageInMiniBuffer(Command):
-    def __init__(self, obj, msg):
-        super().__init__(obj)
-        self.msg = msg
-
-    def execute(self):
-        self.obj.display_message_in_minibuffer(self.msg)
-
-
-class DisplayMessageInMiniBufferAndMoveCursor(Command):
-    def __init__(self, obj, msg):
-        super().__init__(obj)
-        self.msg = msg
-
-    def execute(self):
-        self.obj.display_message_in_minibuffer(self.msg)
+        self.obj.ins_ch(self.ch)
 
 
 # movement commands

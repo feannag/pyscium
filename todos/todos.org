@@ -62,7 +62,9 @@
 ** TODO Clean/Refactor code
 - [X] imports
 - [X] spacing between if elif else blocks
-- [ ] rename methods
+- [X] rename classes & methods
+- [X] remove unnecessary classes
+- [ ] refactor get_logger()
 - [ ] rename __main_window to __internal_window
 - [ ] create a variable to hold the value of (curses.LINES - 1)
 - [ ] rename display_buffer_contents() to update_buffer_contents()

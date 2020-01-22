@@ -294,7 +294,7 @@ class Window:
         current_line_number = self.get_current_line_number()
         current_line_character_number = self.get_current_line_character_number()
         self.__main_window.insch(newline)
-        self.__buffer.add_ch(newline, current_line_number, current_line_character_number)
+        self.__buffer.ins_ch(newline, current_line_number, current_line_character_number)
 
         self.__buffer.move_current_line_to_next_line(current_line_number, current_line_character_number + 1)
         self.set_left(0)
@@ -314,12 +314,12 @@ class Window:
         else:
             self.__main_window.move(y, 0)
 
-    def add_ch(self, ch):
+    def ins_ch(self, ch):
         y, x = self.__main_window.getyx()
         current_line_number = self.get_current_line_number()
         current_line_character_number = self.get_current_line_character_number()
         self.__main_window.insch(ch)
-        self.__buffer.add_ch(ch, current_line_number, current_line_character_number)
+        self.__buffer.ins_ch(ch, current_line_number, current_line_character_number)
 
         self.move_forward_one_char()
 

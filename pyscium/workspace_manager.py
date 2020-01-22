@@ -1,5 +1,5 @@
 from command_invoker import CommandInvoker
-from commands.commands import AddChCommand
+from commands.commands import InsertChCommand
 from commands.commands import CloseFileCommand
 from commands.commands import SaveFileCommand
 from commands.commands import MoveToBeginningOfLineCommand
@@ -61,4 +61,4 @@ class WorkspaceManager(object):
                 invoker.execute(NewlineCommand(self.__window))
 
             else:
-                invoker.execute(AddChCommand(self.__window, ch))
+                invoker.execute(InsertChCommand(self.__window, ch))
