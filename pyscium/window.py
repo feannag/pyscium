@@ -334,10 +334,10 @@ class Window:
                 self.__internal_window.addstr(string)
 
         except TypeError as e:
-            Window.logger.info(e)
+            Window.logger.exception(e)
 
         except curses.error as e:
-            Window.logger.info(e)
+            Window.logger.exception(e)
 
     def open_file_or_create_it(self):
         filename = self.__buffer.get_file_name()

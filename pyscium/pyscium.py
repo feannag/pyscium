@@ -36,14 +36,14 @@ def main():
 
         wm.start()
 
-    except KeyboardInterrupt:
-        pass
+    except KeyboardInterrupt as e:
+        logger.exception(e)
 
     except TypeError as e:
         logger.exception(e)
 
     except curses.error as e:
-        logger.info(e)
+        logger.exception(e)
 
     finally:
         logger.info("exiting pyscium")

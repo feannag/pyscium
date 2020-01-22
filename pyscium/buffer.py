@@ -105,7 +105,7 @@ class Buffer:
                     return 0
 
         except IndexError as e:
-            Buffer.logger.info(e)
+            Buffer.logger.exception(e)
 
     def remove_line_and_append_at_position(self, current_line_number, position):
         try:
