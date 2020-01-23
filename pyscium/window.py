@@ -243,46 +243,64 @@ class Window:
         y, x = self.__internal_window.getyx()
         maxy, maxx = self.__internal_window.getmaxyx()
         current_line_number = self.get_current_line_number()
+        current_line_character_number = self.get_current_line_character_number()
         length_of_line_to_append_to = self.__buffer.get_length_of_line(current_line_number - 1)
-        prev_line_y = y - 1
-        prev_line_x = self.__buffer.get_length_of_line(current_line_number - 1)
+        prev_line_y = current_line_number - 1
 
-        if y > 0 and x == 0:
+        if y > 0 and x > 0:
+            self.move_backward_one_char()
+            self.__internal_window.delch()
+            self.__buffer.delete_character(current_line_number, current_line_character_number - 1)
 
-            if self.__buffer.get_length_of_line_after_append(current_line_number) > maxx:
+            self.display_buffer_contents()
+            self.__internal_window.move(y, x - 1)
+        elif y > 0 and x == 0:
+            if self.__buffer.get_length_of_line(current_line_number - 1) > maxx:
                 self.set_left(self.__buffer.get_length_of_line(current_line_number - 1) - int(maxx / 2))
                 self.set_right(self.__buffer.get_length_of_line(current_line_number - 1) + int(maxx / 2))
+
                 self.__buffer.remove_line_and_append_at_position(current_line_number, current_line_number - 1)
                 self.set_current_line_character_number(length_of_line_to_append_to)
                 self.decrement_current_line_number()
+
                 self.display_buffer_contents()
                 self.__internal_window.move(prev_line_y, int(maxx / 2))
-
             else:
                 self.__buffer.remove_line_and_append_at_position(current_line_number, current_line_number - 1)
                 self.set_current_line_character_number(length_of_line_to_append_to)
                 self.decrement_current_line_number()
+
                 self.display_buffer_contents()
                 self.__internal_window.move(prev_line_y, length_of_line_to_append_to)
-
-        elif y > 0 or x > 0:
+        elif y == 0 and x > 0:
             self.move_backward_one_char()
             self.__internal_window.delch()
+            self.__buffer.delete_character(current_line_number, current_line_character_number - 1)
 
-            self.__buffer.delete_character(current_line_number, x)
+            self.display_buffer_contents()
+            self.__internal_window.move(y, x - 1)
+        elif current_line_character_number > 0 and x == 0:
+            self.decrement_left()
+            self.decrement_right()
+            self.decrement_current_line_character_number()
 
-        elif current_line_number == 0 and x == 0:
-            curses.beep()
+            self.display_buffer_contents()
+            self.__internal_window.move(y, 0)
+        elif y == 0 and current_line_number != 0:
+            self.set_left(self.__buffer.get_length_of_line(current_line_number - 1) - int(maxx / 2))
+            self.set_right(self.__buffer.get_length_of_line(current_line_number - 1) + int(maxx / 2))
 
-        else:
             self.__buffer.remove_line_and_append_at_position(current_line_number, current_line_number - 1)
             self.set_current_line_character_number(length_of_line_to_append_to)
             self.decrement_current_line_number()
+
             self.decrement_top()
             self.decrement_bottom()
-            self.display_buffer_contents()
 
-            self.__internal_window.move(0, prev_line_x)
+            self.display_buffer_contents()
+            self.__internal_window.move(prev_line_y, int(maxx / 2))
+        elif current_line_number == 0 and x == 0:
+            curses.beep()
 
     def newline(self):
         newline = 10
