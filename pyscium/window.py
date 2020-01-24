@@ -190,27 +190,28 @@ class Window:
         buffer_end_y, buffer_end_x = self.__buffer.get_buffer_end()
 
         if current_line_number != buffer_end_y:
-
             next_line_y = y + 1
             main_window_height = curses.LINES - 1
+            if next_line_y != main_window_height:
+                self.set_left(0)
+                self.set_right(maxx)
+                self.set_current_line_character_number(0)
 
-            if next_line_y == main_window_height:
+                self.display_buffer_contents()
+                self.__internal_window.move(y + 1, 0)
+            elif next_line_y == main_window_height:
                 self.increment_top()
                 self.increment_bottom()
+
+                self.set_left(0)
+                self.set_right(maxx)
+                self.set_current_line_character_number(0)
 
                 self.display_buffer_contents()
                 self.__internal_window.move(y, 0)
 
-            else:
-                self.set_left(0)
-                self.set_right(maxx)
-                self.set_current_line_character_number(0)
-                self.display_buffer_contents()
-                self.__internal_window.move(y + 1, 0)
-
             if current_line_number < buffer_end_y:
                 self.increment_current_line_number()
-
         else:
             curses.beep()
 
