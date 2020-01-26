@@ -57,10 +57,14 @@ class Buffer:
         return self.__buffer_end
 
     def _update_buffer_end(self):
-        y = len(self.__contents) - 1
-        x = len(self.__contents[len(self.__contents) - 1]) - 1
-
-        self.__buffer_end = (y, x)
+        if self.__contents:
+            y = len(self.__contents) - 1
+            x = len(self.__contents[len(self.__contents) - 1]) - 1
+            self.__buffer_end = (y, x)
+        else:
+            y = 0
+            x = 0
+            self.__buffer_end = (y, x)
 
     def ins_ch(self, ch, current_line_number, current_line_character_number):
         try:
@@ -92,18 +96,20 @@ class Buffer:
 
     def get_length_of_line(self, line_number):
         try:
-            number_of_lines_in_buffer = len(self.__contents)
-            if line_number <= number_of_lines_in_buffer:
+            if self.__contents:
+                number_of_lines_in_buffer = len(self.__contents)
+                if line_number <= number_of_lines_in_buffer:
 
-                number_of_characters_in_line = len(self.__contents[line_number])
-                if number_of_characters_in_line > 0:
+                    number_of_characters_in_line = len(self.__contents[line_number])
+                    if number_of_characters_in_line > 0:
 
-                    number_of_characters_in_line_less_newline = number_of_characters_in_line - 1
-                    return number_of_characters_in_line_less_newline
+                        number_of_characters_in_line_less_newline = number_of_characters_in_line - 1
+                        return number_of_characters_in_line_less_newline
 
-                else:
-                    return 0
-
+                    else:
+                        return 0
+            else:
+                return 0
         except IndexError as e:
             Buffer.logger.exception(e)
 
