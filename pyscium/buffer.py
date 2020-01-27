@@ -99,13 +99,9 @@ class Buffer:
             if self.__contents:
                 number_of_lines_in_buffer = len(self.__contents)
                 if line_number <= number_of_lines_in_buffer:
-
                     number_of_characters_in_line = len(self.__contents[line_number])
                     if number_of_characters_in_line > 0:
-
-                        number_of_characters_in_line_less_newline = number_of_characters_in_line - 1
-                        return number_of_characters_in_line_less_newline
-
+                        return number_of_characters_in_line
                     else:
                         return 0
             else:
