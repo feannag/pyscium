@@ -11,6 +11,7 @@ from commands.commands import MoveToNextLineCommand
 from commands.commands import BackspaceCommand
 from commands.commands import NewlineCommand
 from commands.commands import ExitCommand
+from keys import Keys
 from logger import pyscium_logger
 from window import Window
 
@@ -29,36 +30,35 @@ class WorkspaceManager(object):
         while True:
             ch = window.getch()
 
-            if ch == 24:  # ^x
+            if ch == Keys.QUIT.value:  # ^x
                 invoker.execute(CloseFileCommand(self.__window))
                 invoker.execute(ExitCommand(None))
 
-            elif ch == 19:  # ^s
+            elif ch == Keys.SAVE.value:  # ^s
                 invoker.execute(SaveFileCommand(self.__window))
 
-            elif ch == 1:  # ^a
+            elif ch == Keys.MOVE_TO_BEGINNING_OF_LINE.value:  # ^a
                 invoker.execute(MoveToBeginningOfLineCommand(self.__window))
 
-            elif ch == 5:  # ^e
+            elif ch == Keys.MOVE_TO_END_OF_LINE.value:  # ^e
                 invoker.execute(MoveToEndOfLineCommand(self.__window))
 
-            elif ch == 6:  # ^f
+            elif ch == Keys.MOVE_FORWARD_ONE_CHARACTER.value:  # ^f
                 invoker.execute(MoveForwardOneCharCommand(self.__window))
 
-            elif ch == 2:  # ^b
+            elif ch == Keys.MOVE_BACKWARD_ONE_CHARACTER.value:  # ^b
                 invoker.execute(MoveBackwardOneCharCommand(self.__window))
 
-            elif ch == 14:  # ^n
+            elif ch == Keys.MOVE_TO_NEXT_LINE.value:  # ^n
                 invoker.execute(MoveToNextLineCommand(self.__window))
 
-            elif ch == 16:  # ^p
+            elif ch == Keys.MOVE_TO_PREVIOUS_LINE.value:  # ^p
                 invoker.execute(MoveToPreviousLineCommand(self.__window))
 
-            elif ch == 263:  # backspace
+            elif ch == Keys.BACKSPACE.value:  # backspace
                 invoker.execute(BackspaceCommand(self.__window))
 
-            elif ch == 10:  # newline
+            elif ch == Keys.NEWLINE.value:  # newline
                 invoker.execute(NewlineCommand(self.__window))
-
             else:
                 invoker.execute(InsertChCommand(self.__window, ch))
